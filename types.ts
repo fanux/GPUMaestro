@@ -36,6 +36,7 @@ export interface Workload {
   createdAt: string;
   updatedAt: string;
   logs?: string[];
+  timeoutMinutes?: number;
 }
 
 export interface Model {
