@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LayoutDashboard, Rocket, Terminal, Settings, Box, Database } from 'lucide-react';
+import { LayoutDashboard, Rocket, Terminal, Settings, Box, Database, FolderTree } from 'lucide-react';
 import { ResourceType, JobStatus, GPUResource, Workload, Model, Dataset } from './types';
 
 export const NAV_ITEMS = [
@@ -9,6 +9,7 @@ export const NAV_ITEMS = [
   { id: 'jobs', label: 'Batch Jobs', icon: <Rocket size={20} /> },
   { id: 'models', label: 'Models', icon: <Box size={20} /> },
   { id: 'datasets', label: 'Datasets', icon: <Database size={20} /> },
+  { id: 'files', label: 'Files & Artifacts', icon: <FolderTree size={20} /> },
   { id: 'admin', label: 'Admin Panel', icon: <Settings size={20} /> },
 ];
 

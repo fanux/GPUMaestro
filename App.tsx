@@ -7,6 +7,7 @@ import BatchJobs from './components/BatchJobs';
 import ModelManagement from './components/ModelManagement';
 import DatasetManagement from './components/DatasetManagement';
 import AdminPanel from './components/AdminPanel';
+import FileManagement from './components/FileManagement';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -23,6 +24,8 @@ const App: React.FC = () => {
         return <ModelManagement />;
       case 'datasets':
         return <DatasetManagement />;
+      case 'files':
+        return <FileManagement />;
       case 'admin':
         return <AdminPanel />;
       default:
