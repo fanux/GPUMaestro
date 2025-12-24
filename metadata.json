@@ -1,0 +1,7 @@
+{
+  "name": "GPU Maestro - Management Platform",
+  "description": "A commercial-grade intelligent GPU workload management engine for Kubernetes environments, featuring dynamic scheduling, virtualization, and GitOps integration.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
