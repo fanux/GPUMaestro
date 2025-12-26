@@ -1,62 +1,65 @@
-
-import { GoogleGenAI, Type } from "@google/genai";
-
-// Always use direct process.env.API_KEY for initialization
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const getJobStatusInsights = async (logs: string[], jobName: string) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Analyze the following execution logs for the GPU job "${jobName}" and provide a concise summary of the progress and any potential issues:
-      
-      Logs:
-      ${logs.join('\n')}
-      
-      Summary should be 2-3 sentences max.`,
+    const response = await fetch('/api/gemini/job-insights', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ logs, jobName }),
     });
-    return response.text;
+
+    if (!response.ok) {
+      throw new Error('Failed to get job insights');
+    }
+
+    const data = await response.json();
+    return data.insight;
   } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Unable to generate insights at this time.";
+    console.error('Error fetching job insights:', error);
+    return 'Unable to generate insights at this time.';
   }
 };
 
 export const getSchedulingAdvice = async (activeLoad: number, requestedGpus: number) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `The current GPU cluster utilization is ${activeLoad}%. A user wants to request ${requestedGpus} GPUs. 
-      Briefly advise on whether to schedule now or wait for lower utilization, considering potential resource contention.`,
+    const response = await fetch('/api/gemini/scheduling-advice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ activeLoad, requestedGpus }),
     });
-    return response.text;
+
+    if (!response.ok) {
+      throw new Error('Failed to get scheduling advice');
+    }
+
+    const data = await response.json();
+    return data.advice;
   } catch (error) {
-    return "Schedule immediately (Automatic).";
+    console.error('Error fetching scheduling advice:', error);
+    return 'Schedule immediately (Automatic).';
   }
 };
 
 export const getOptimizationSuggestions = async (gpuUtilizationHistory: any[]) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Analyze this GPU utilization data: ${JSON.stringify(gpuUtilizationHistory)}. 
-      Suggest one high-impact optimization for the cluster (e.g., more virtualization, changing preemption rules).`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            suggestion: { type: Type.STRING },
-            impact: { type: Type.STRING },
-            difficulty: { type: Type.STRING }
-          },
-          required: ["suggestion", "impact", "difficulty"]
-        }
-      }
+    const response = await fetch('/api/gemini/optimization-suggestions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ gpuUtilizationHistory }),
     });
-    // Use .text property directly and trim for JSON parsing
-    return JSON.parse(response.text.trim());
+
+    if (!response.ok) {
+      throw new Error('Failed to get optimization suggestions');
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    return { suggestion: "Enable dynamic GPU splitting", impact: "High", difficulty: "Medium" };
+    console.error('Error fetching optimization suggestions:', error);
+    return { suggestion: 'Enable dynamic GPU splitting', impact: 'High', difficulty: 'Medium' };
   }
 };

@@ -1,0 +1,11 @@
+{
+  "/": "pages/index.js",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/admin": "pages/admin.js",
+  "/datasets": "pages/datasets.js",
+  "/files": "pages/files.js",
+  "/jobs": "pages/jobs.js",
+  "/models": "pages/models.js",
+  "/sandboxes": "pages/sandboxes.js"
+}

@@ -4,66 +4,100 @@ GPU Maestro is a high-performance, intelligent GPU workload management engine de
 
 ## 🚀 Getting Started
 
-Since this project uses modern ES6 modules and Import Maps, it can be run directly in the browser without a heavy build step.
-
 ### Prerequisites
-- A modern web browser (Chrome, Edge, or Safari) that supports [Import Maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap).
-- A local static file server.
+- Node.js 18+ and npm
+- A Gemini API key from [Google AI Studio](https://aistudio.google.com/)
 
-### Running Locally
+### Installation
 
-1. **Using Node.js (Recommended)**:
+1. **Clone and Install Dependencies**:
    ```bash
-   npx serve .
+   npm install
    ```
-   *This will serve the project at `http://localhost:3000`.*
 
-2. **Using Python**:
+2. **Set up Environment Variables**:
    ```bash
-   python -m http.server 8000
+   cp .env.example .env.local
    ```
-   *Access the app at `http://localhost:8000`.*
+   Then edit `.env.local` and add your Gemini API key:
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
 
-3. **Using VS Code**:
-   Install the **Live Server** extension and click "Go Live" at the bottom right of the editor while `index.html` is open.
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:3000`
+
+4. **Build for Production**:
+   ```bash
+   npm run build
+   npm start
+   ```
 
 ## 🛠 Tech Stack
 
-- **Framework**: React 19 (via ESM)
+- **Framework**: Next.js 16 + React 19
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
 - **Charts**: Recharts
 - **Intelligence**: Google Gemini API (@google/genai)
-- **Architecture**: Component-based ES Modules
+- **Architecture**: Component-based with API routes
 
 ## 📁 Project Structure
 
-- `index.html`: Entry point with CDN links and Import Maps.
-- `index.tsx`: Main React mounting script.
-- `App.tsx`: Root component handling navigation and layout.
+- `pages/`:
+    - `_app.tsx`: Global layout with navigation
+    - `index.tsx`: Dashboard page
+    - `sandboxes.tsx`: Interactive dev environments
+    - `jobs.tsx`: Batch training jobs
+    - `models.tsx`: Model management
+    - `datasets.tsx`: Dataset management
+    - `files.tsx`: File and artifact management
+    - `admin.tsx`: Admin panel
+    - `api/gemini/`: API routes for Gemini AI services
 - `components/`:
-    - `Dashboard.tsx`: Real-time cluster metrics and visualization.
-    - `Sandboxes.tsx`: Interactive dev environments (VS Code/Terminal).
-    - `BatchJobs.tsx`: Distributed training job submission (Git/Image).
-    - `FileManagement.tsx`: Shared artifacts and model publishing.
-    - `ModelManagement.tsx`: Registry for trained weights and versions.
-    - `DatasetManagement.tsx`: Data source and storage quota management.
-    - `AdminPanel.tsx`: Global policies, hardware health, and scheduling rules.
+    - `Dashboard.tsx`: Real-time cluster metrics and visualization
+    - `Sandboxes.tsx`: Interactive dev environments (VS Code/Terminal)
+    - `BatchJobs.tsx`: Distributed training job submission
+    - `FileManagement.tsx`: Shared artifacts and model publishing
+    - `ModelManagement.tsx`: Registry for trained weights and versions
+    - `DatasetManagement.tsx`: Data source and storage management
+    - `AdminPanel.tsx`: Global policies and scheduling rules
 - `services/`:
-    - `geminiService.ts`: AI-driven log analysis and scheduling optimization.
-- `types.ts` & `constants.tsx`: Centralized data structures and mock data.
+    - `geminiService.ts`: Client-side service for AI features
+- `types.ts` & `constants.tsx`: Centralized data structures and mock data
 
-## 🔑 Note on API Keys
+## 🔑 Environment Variables
 
-The application utilizes the **Google Gemini API** for log analysis and scheduling advice. The `process.env.API_KEY` is expected to be available in the environment. For certain high-quality generation tasks (like Veo or Pro models), the app will prompt you to select a paid API key via a secure dialog.
+Create a `.env.local` file with the following variable:
+
+```bash
+# Google Gemini API Key for AI-powered insights
+# Get your API key from: https://ai.google.dev/
+GEMINI_API_KEY=your_gemini_api_key_here
+```
 
 ## 📜 Features at a Glance
 
-- **GPU Virtualization**: Supports fractional GPU slicing (e.g., 0.1 GPU) for lightweight tasks.
-- **GitOps Integration**: Submit training jobs directly from repository URLs.
-- **Remote Dev**: Connect via VS Code Remote-SSH or a high-performance Web Terminal.
-- **Artifact Lifecycle**: Automatically track model checkpoints and publish them to the internal Model Registry.
-- **AI Observability**: Real-time log summarization and error debugging powered by Gemini.
+- **GPU Virtualization**: Supports fractional GPU slicing (e.g., 0.1 GPU) for lightweight tasks
+- **GitOps Integration**: Submit training jobs directly from repository URLs
+- **Remote Dev**: Connect via VS Code Remote-SSH or a high-performance Web Terminal
+- **Artifact Lifecycle**: Automatically track model checkpoints and publish them to the internal Model Registry
+- **AI Observability**: Real-time log summarization and error debugging powered by Gemini
+- **Secure API Routes**: Server-side API calls protect your API keys
+
+## 🚦 Development Notes
+
+### Hot Reloading
+Next.js provides fast refresh for immediate feedback during development. Changes to components, pages, and API routes are reflected instantly.
+
+### TypeScript
+The project uses TypeScript for type safety. Type checking is performed during development and build time.
+
+### Tailwind CSS
+Utility-first CSS framework is configured and ready to use. Custom styles can be added to `styles/globals.css`.
 
 ---
 *Built by World-Class Frontend Engineers.*

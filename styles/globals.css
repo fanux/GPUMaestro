@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Optional custom base styles */
+@layer base {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+}
